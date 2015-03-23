@@ -3,10 +3,39 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Assert in Javascript</title>
+    <style>
+        .pass:before{
+            content:'Pass: ';
+            color: forestgreen;
+        }
+        .fail:before{
+            content:'Fail: ';
+            color: darkred;
+        }
+    </style>
 </head>
 <body>
+<div id="result"></div>
 <script>
-    var assert = function assert ()
+    var assert = function assert(outcome, description) {
+        var li = document.createElement('li');
+        var result = document.getElementById("result");
+
+        li.className = outcome ? 'pass' : 'fail';
+
+        li.appendChild(document.createTextNode(description));
+        result.appendChild(li);
+    };
+
+    var someArray= [1,2,3,4,5];
+    var count = 0;
+    for (var i=0; i<someArray.length; i++){
+        (function (i){
+            setTimeout(function(){
+                assert(count++ === i, 'it should return ' + i);
+            }, i*1000);
+        })(i);
+    }
 </script>
 </body>
 </html>
